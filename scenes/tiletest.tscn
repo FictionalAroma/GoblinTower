@@ -1,0 +1,143 @@
+[gd_scene load_steps=9 format=3 uid="uid://bgtjtqgsvj1kx"]
+
+[ext_resource type="Script" path="res://scripts/LevelManager.cs" id="1_5b1xx"]
+[ext_resource type="TileSet" uid="uid://lccgfwsepgoh" path="res://scenes/tiletest.tres" id="1_b73gr"]
+[ext_resource type="Script" path="res://scripts/GridManager.cs" id="2_dgm1k"]
+[ext_resource type="Script" path="res://scripts/UIManager.cs" id="4_vtdi0"]
+[ext_resource type="Script" path="res://scripts/BuildPlacer.cs" id="5_vqp55"]
+[ext_resource type="Script" path="res://scripts/CameraControl.cs" id="6_2a633"]
+[ext_resource type="Texture2D" uid="uid://clbd8cr2mqien" path="res://sprites/goblin-alpha.png" id="6_rxsna"]
+[ext_resource type="Texture2D" uid="uid://bync2o7s83dba" path="res://sprites/ui-icons/green_boxCross.png" id="7_67577"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="LevelManager" type="Node2D" parent="."]
+script = ExtResource("1_5b1xx")
+_startingLives = 20
+_startingShineys = 50
+
+[node name="LevelMap" type="TileMap" parent="LevelManager"]
+y_sort_enabled = true
+position = Vector2(791, 279)
+tile_set = ExtResource("1_b73gr")
+format = 2
+layer_0/name = "Terrain"
+layer_0/y_sort_enabled = true
+layer_0/z_index = -1
+layer_0/tile_data = PackedInt32Array(-131071, 65536, 8, -65536, 65536, 8, -131073, 131072, 8, -65537, 131072, 8, -2, 131072, 8, 196607, 131072, 8, 65534, 131072, 8, -196609, 131072, 8, -131074, 131072, 8, -65538, 131072, 8, -3, 131072, 8, 262142, 393216, 8, 196606, 458752, 8, 131069, 393216, 8, 65533, 393216, 8, -4, 327680, 8, -65540, 131072, 10, -5, 327680, 8, 65531, 327680, 8, 131066, 327680, 8, -196607, 131072, 8, 131073, 458752, 8, 196608, 458752, 13, 262144, 720896, 12, 393215, 720896, 14, 65535, 458752, 8, 131070, 458752, 8, 131071, 65536, 8, -262145, 65536, 8, -262144, 65536, 8, -196608, 65536, 8, 0, 458752, 8, -1, 458752, 8, -131072, 65536, 8, -262143, 65536, 8, -327680, 65536, 8, -393216, 65536, 8, -393217, 589824, 8, -524288, 589824, 8, -458752, 589824, 8, -393215, 589824, 8, -327679, 589824, 8, -262142, 589824, 8, -196606, 393216, 8, -131070, 0, 8, -65535, 0, 8, 1, 0, 8, 65536, 458752, 8, -327681, 524288, 8, -262146, 524288, 8, -196610, 524288, 8, -131075, 524288, 8, -65539, 524288, 8, 131072, 0, 8, 262143, 0, 8, 327679, 0, 8, -131069, 393216, 8, -65534, 327680, 8, 2, 327680, 8, 65537, 327680, 8)
+layer_1/name = "Gobbos"
+layer_1/enabled = true
+layer_1/modulate = Color(1, 1, 1, 1)
+layer_1/y_sort_enabled = true
+layer_1/y_sort_origin = 0
+layer_1/z_index = 1
+layer_1/tile_data = PackedInt32Array(131071, 1, 65536, -196607, 1, 65536)
+layer_2/name = "Pathing"
+layer_2/enabled = true
+layer_2/modulate = Color(1, 1, 1, 1)
+layer_2/y_sort_enabled = true
+layer_2/y_sort_origin = 0
+layer_2/z_index = 0
+layer_2/tile_data = PackedInt32Array(131066, 1, 131072, -327681, 1, 327680, -262141, 1, 327680, 131073, 1, 327680)
+script = ExtResource("2_dgm1k")
+
+[node name="BuildPlacer" type="Sprite2D" parent="LevelManager"]
+process_mode = 4
+visible = false
+self_modulate = Color(1, 0, 0, 0.827451)
+position = Vector2(616, 272)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_rxsna")
+script = ExtResource("5_vqp55")
+
+[node name="UIManager" type="CanvasLayer" parent="." node_paths=PackedStringArray("_livesDisplay", "_shineysDisplay")]
+process_mode = 3
+script = ExtResource("4_vtdi0")
+_livesDisplay = NodePath("Control/LivesNumber")
+_shineysDisplay = NodePath("Control/MoneyNumber")
+
+[node name="Control" type="Control" parent="UIManager"]
+layout_direction = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="LivesLabel" type="Label" parent="UIManager/Control"]
+layout_mode = 0
+offset_right = 184.0
+offset_bottom = 70.0
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 48
+text = "Lives"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="LivesNumber" type="Label" parent="UIManager/Control"]
+layout_mode = 0
+offset_left = 192.0
+offset_right = 246.0
+offset_bottom = 70.0
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 48
+text = "20
+"
+vertical_alignment = 1
+
+[node name="MoneyLabel" type="Label" parent="UIManager/Control"]
+layout_mode = 0
+offset_top = 64.0
+offset_right = 176.0
+offset_bottom = 134.0
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 48
+text = "Shineys"
+vertical_alignment = 1
+
+[node name="MoneyNumber" type="Label" parent="UIManager/Control"]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 64.0
+offset_right = 278.0
+offset_bottom = 134.0
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 48
+text = "20
+"
+vertical_alignment = 1
+
+[node name="PauseButton" type="TouchScreenButton" parent="UIManager/Control"]
+position = Vector2(1096, 16)
+texture_normal = ExtResource("7_67577")
+
+[node name="BuildButton" type="TouchScreenButton" parent="UIManager"]
+position = Vector2(384, 568)
+scale = Vector2(0.3, 0.3)
+texture_normal = ExtResource("6_rxsna")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+light_mask = 3
+visibility_layer = 3
+position = Vector2(576, 328)
+limit_left = 0
+limit_top = 0
+limit_right = 1500
+limit_bottom = 800
+limit_smoothed = true
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+editor_draw_limits = true
+script = ExtResource("6_2a633")
+_srollSpeed = 1.0
+
+[node name="BuildMenu" type="CanvasLayer" parent="."]
+
+[connection signal="pressed" from="UIManager/Control/PauseButton" to="LevelManager" method="TogglePause"]
+[connection signal="pressed" from="UIManager/BuildButton" to="LevelManager" method="ToggleBuildMode"]

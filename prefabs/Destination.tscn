@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://besf8vtd0oop0"]
+
+[ext_resource type="Texture2D" uid="uid://b3vmm7bck6ijs" path="res://sprites/modularBuildings_025_1.png" id="1_vxwr7"]
+
+[node name="Destination" type="Node2D"]
+
+[node name="ModularBuildings0251" type="Sprite2D" parent="."]
+position = Vector2(-69, -72)
+texture = ExtResource("1_vxwr7")

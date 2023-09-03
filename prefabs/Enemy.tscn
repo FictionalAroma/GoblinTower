@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3 uid="uid://cxoy68q5a2jsx"]
+
+[ext_resource type="Texture2D" uid="uid://be06ep04tq3e3" path="res://sprites/gn-alpha.png" id="1_7qabe"]
+[ext_resource type="Script" path="res://scripts/Enemy.cs" id="1_iihub"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6650n"]
+radius = 13.0
+height = 68.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bi4sf"]
+radius = 28.0179
+
+[node name="Enemy" type="Node2D" node_paths=PackedStringArray("aimAtPosition")]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_iihub")
+moveSpeed = 50.0
+aimAtPosition = NodePath("Area2D/AimAtPosition")
+_maxHp = 5
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -128)
+texture = ExtResource("1_7qabe")
+region_enabled = true
+region_rect = Rect2(95, 3, 114, 247)
+
+[node name="Pather" type="NavigationAgent2D" parent="."]
+path_desired_distance = 5.0
+target_desired_distance = 0.1
+path_max_distance = 10.0
+path_postprocessing = 1
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-5, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_6650n")
+
+[node name="AimAtPosition" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-8, -124)
+shape = SubResource("CircleShape2D_bi4sf")
+
+[connection signal="ready" from="." to="." method="ActorSetup"]
+[connection signal="navigation_finished" from="Pather" to="." method="OnNavReached"]
+[connection signal="area_entered" from="Area2D" to="." method="OnAreaEntered"]

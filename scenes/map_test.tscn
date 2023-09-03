@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://cysh7wimgqebt"]
+
+[ext_resource type="PackedScene" uid="uid://b4hdewugj2tyr" path="res://prefabs/gnome.tscn" id="1_r2n84"]
+[ext_resource type="PackedScene" uid="uid://djqcm8nxcre3i" path="res://prefabs/fairyqueen.tscn" id="2_wq7xi"]
+[ext_resource type="PackedScene" uid="uid://c7c2mnq8cdlbf" path="res://prefabs/gobbo.tscn" id="5_q3kqh"]
+
+[sub_resource type="Curve2D" id="Curve2D_5pt68"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 60, 578, 0, 0, 0, 0, 140, 56, 0, 0, 0, 0, 959, 60, 0, 0, 0, 0, 927, 539, 0, 0, 0, 0, 469, 534, 0, 0, 0, 0, 493, 161)
+}
+point_count = 6
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_edgth"]
+vertices = PackedVector2Array(1171, -11, 1238, 716, -17, 730, -2, 7)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-2, 7, -17, 730, 1238, 716, 1171, -11)])
+
+[node name="MapTest" type="Node2D"]
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_5pt68")
+
+[node name="Node2D" type="Node2D" parent="Path2D"]
+
+[node name="Gnome" parent="Path2D" instance=ExtResource("1_r2n84")]
+position = Vector2(60, 578)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_edgth")
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="NavigationRegion2D"]
+
+[node name="Tree12-default-001" type="Sprite2D" parent="NavigationRegion2D/NavigationObstacle2D"]
+position = Vector2(570, 233)
+
+[node name="NavigationObstacle2D2" type="NavigationObstacle2D" parent="NavigationRegion2D"]
+
+[node name="Tree12-default-001" type="Sprite2D" parent="NavigationRegion2D/NavigationObstacle2D2"]
+position = Vector2(590, 511)
+
+[node name="Destination" type="Node2D" parent="NavigationRegion2D"]
+position = Vector2(942, 539)
+
+[node name="NavigationAgent2D" parent="NavigationRegion2D" instance=ExtResource("2_wq7xi")]
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(50, 310, 164, 568)
+
+[node name="Gobbo" parent="." instance=ExtResource("5_q3kqh")]
+position = Vector2(418, 345)

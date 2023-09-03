@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://c7c2mnq8cdlbf"]
+
+[ext_resource type="Script" path="res://scripts/Gobbo.cs" id="1_1own4"]
+[ext_resource type="PackedScene" uid="uid://dvtq4ysrs0agk" path="res://prefabs/arrow.tscn" id="2_yfppw"]
+[ext_resource type="Texture2D" uid="uid://clbd8cr2mqien" path="res://sprites/goblin-alpha.png" id="3_ds2sn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mdxo3"]
+radius = 367.396
+
+[node name="Gobbo" type="Node2D"]
+script = ExtResource("1_1own4")
+_fireTimer = 1.0
+_toShoot = ExtResource("2_yfppw")
+
+[node name="TowerRange" type="Area2D" parent="."]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TowerRange"]
+visible = false
+position = Vector2(3, -37)
+shape = SubResource("CircleShape2D_mdxo3")
+
+[node name="Goblin-alpha" type="Sprite2D" parent="."]
+position = Vector2(-2, -44)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_ds2sn")
+region_enabled = true
+region_rect = Rect2(40, 16.5, 162, 239)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+
+[connection signal="area_entered" from="TowerRange" to="." method="OnAreaEntered"]
+[connection signal="area_exited" from="TowerRange" to="." method="OnAreaExited"]
+[connection signal="timeout" from="Timer" to="." method="OnShotTimer"]

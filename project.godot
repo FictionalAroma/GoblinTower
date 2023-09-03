@@ -1,0 +1,50 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Goblin Tower"
+run/main_scene="res://scenes/tiletest.tscn"
+config/features=PackedStringArray("4.1", "C#", "Mobile")
+config/icon="res://icon.svg"
+
+[display]
+
+window/energy_saving/keep_screen_on=false
+window/stretch/mode="viewport"
+
+[dotnet]
+
+project/assembly_name="Goblin Tower"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/ppc/plugin.cfg")
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+pointing/emulate_mouse_from_touch=false
+
+[layer_names]
+
+2d_render/layer_1="Terrain"
+2d_render/layer_2="Towers"
+2d_render/layer_3="Bullet"
+2d_render/layer_4="Enemies"
+2d_render/layer_5="UI"
+2d_physics/layer_1="Enemies"
+2d_navigation/layer_1="Pathing"
+2d_physics/layer_2="Projectiles"
+2d_physics/layer_3="Gobbos"
+
+[rendering]
+
+renderer/rendering_method="mobile"
