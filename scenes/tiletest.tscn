@@ -1,13 +1,15 @@
-[gd_scene load_steps=9 format=3 uid="uid://bgtjtqgsvj1kx"]
+[gd_scene load_steps=11 format=3 uid="uid://bgtjtqgsvj1kx"]
 
 [ext_resource type="Script" path="res://scripts/LevelManager.cs" id="1_5b1xx"]
 [ext_resource type="TileSet" uid="uid://lccgfwsepgoh" path="res://scenes/tiletest.tres" id="1_b73gr"]
 [ext_resource type="Script" path="res://scripts/GridManager.cs" id="2_dgm1k"]
 [ext_resource type="Script" path="res://scripts/UIManager.cs" id="4_vtdi0"]
 [ext_resource type="Script" path="res://scripts/BuildPlacer.cs" id="5_vqp55"]
-[ext_resource type="Script" path="res://scripts/CameraControl.cs" id="6_2a633"]
+[ext_resource type="Texture2D" uid="uid://ea5iyklh3u2o" path="res://sprites/ui-icons/blue_boxCheckmark.png" id="6_1376c"]
 [ext_resource type="Texture2D" uid="uid://clbd8cr2mqien" path="res://sprites/goblin-alpha.png" id="6_rxsna"]
 [ext_resource type="Texture2D" uid="uid://bync2o7s83dba" path="res://sprites/ui-icons/green_boxCross.png" id="7_67577"]
+[ext_resource type="Texture2D" uid="uid://bke7qjnjmmonl" path="res://sprites/ui-icons/red_boxCross.png" id="7_kspx1"]
+[ext_resource type="Script" path="res://addons/ppc/ppcamera.gd" id="10_nwlje"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -43,12 +45,27 @@ script = ExtResource("2_dgm1k")
 
 [node name="BuildPlacer" type="Sprite2D" parent="LevelManager"]
 process_mode = 4
-visible = false
 self_modulate = Color(1, 0, 0, 0.827451)
-position = Vector2(616, 272)
+position = Vector2(400, 130)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("6_rxsna")
 script = ExtResource("5_vqp55")
+
+[node name="ConfirmPlace" type="TouchScreenButton" parent="LevelManager/BuildPlacer"]
+visible = false
+position = Vector2(-176, -144)
+scale = Vector2(2, 2)
+texture_normal = ExtResource("6_1376c")
+
+[node name="UndoPlace" type="TouchScreenButton" parent="LevelManager/BuildPlacer"]
+visible = false
+position = Vector2(112, -144)
+scale = Vector2(2, 2)
+texture_normal = ExtResource("7_kspx1")
+
+[node name="PinchPanCamera" type="Marker2D" parent="LevelManager"]
+position = Vector2(584, 344)
+script = ExtResource("10_nwlje")
 
 [node name="UIManager" type="CanvasLayer" parent="." node_paths=PackedStringArray("_livesDisplay", "_shineysDisplay")]
 process_mode = 3
@@ -120,24 +137,6 @@ texture_normal = ExtResource("7_67577")
 position = Vector2(384, 568)
 scale = Vector2(0.3, 0.3)
 texture_normal = ExtResource("6_rxsna")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-light_mask = 3
-visibility_layer = 3
-position = Vector2(576, 328)
-limit_left = 0
-limit_top = 0
-limit_right = 1500
-limit_bottom = 800
-limit_smoothed = true
-position_smoothing_enabled = true
-drag_horizontal_enabled = true
-drag_vertical_enabled = true
-editor_draw_limits = true
-script = ExtResource("6_2a633")
-_srollSpeed = 1.0
-
-[node name="BuildMenu" type="CanvasLayer" parent="."]
 
 [connection signal="pressed" from="UIManager/Control/PauseButton" to="LevelManager" method="TogglePause"]
 [connection signal="pressed" from="UIManager/BuildButton" to="LevelManager" method="ToggleBuildMode"]

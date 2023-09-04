@@ -30,12 +30,18 @@ public partial class LevelManager : Node2D
 		_uiManager = GetNode<UIManager>("../UIManager");
 		_levelGrid = GetNode<GridManager>("LevelGrid");
 		_cam = GetViewport().GetCamera2D();
+
 		LevelSetup();
 	}
 	public void LevelSetup()
 	{
 		_buildMode = false;
 		CurrentLives = _startingLives;
+		CurrentShineys = _startingShineys;
+		_cam.LimitTop = 0;
+		_cam.LimitLeft = 0;
+		_cam.LimitBottom = 1000;
+		_cam.LimitRight = 1500;
 
 	}
     public void OnEnemyDead(Enemy enemy)
